@@ -28,10 +28,11 @@ class PlayArea():
     def update_styles(self):
         style.theme_use(get_game_theme())
         style.configure(f'Frame{self.colour}.TFrame', bordercolor="black")
+        style.configure(f'FrameArea{self.colour}.TFrame', bordercolor="black", background="grey")
         style.configure('TSpinbox', selectbackground='black')
         style.configure(f'Spin{self.colour}.TSpinbox', bordercolor=self.bordercolor)  
         self.header.configure(style=f'Frame{self.colour}.TFrame')
-        self.card_area.configure(style=f'Frame{self.colour}.TFrame')
+        self.card_area.configure(style=f'FrameArea{self.colour}.TFrame')
         self.spin['style'] = f'Spin{self.colour}.TSpinbox'
 
 class DrawCard():
