@@ -17,7 +17,7 @@ def end_draw():
                 state_update = False
         if state_update:
             v.update_status(Deck.decks_status(False))       
-        reset()
+    reset()
         
 
 def shuffle(deck_dict):
@@ -75,8 +75,9 @@ def reset():
         data[item]['play_area'].btn_draw.configure(state='disabled', text=f"No Crits", command=action_with_arg)
 
 def switch_state():
-    v.update_game_state()
+    end_draw()
     data.clear()
+    v.update_game_state()    
 
     if v.get_game_state() == "oathsworn":
         white_o = {"deck": white_deck_o, "play_area": v.white_area, "colour": "white"}
@@ -104,7 +105,8 @@ def switch_state():
         data[item]['play_area'].btn_shuffle.configure(command=action_with_arg)
         v.update_deck_status(data[item]["play_area"], data[item]["deck"].remaining_cards())
         data[item]["play_area"].update_styles()
-    end_draw()
+    
+    reset()
 
 data = {}
 v.btn_draw_all.configure(command=draw_all)
@@ -113,8 +115,6 @@ v.btn_switch.configure(command=switch_state)
 switch_state()
 switch_state()
 switch_state()
-
-reset()
 update_status(False)
 
 v.root.mainloop()
