@@ -74,24 +74,45 @@ def reset():
         action_with_arg = partial(draw, data[item], crit=True)
         data[item]['play_area'].btn_draw.configure(state='disabled', text=f"No Crits", command=action_with_arg)
 
-game_active = True
+def switch_state():
+    v.update_game_state()
+    data.clear()
+
+    if v.get_game_state() == "oathsworn":
+        white_o = {"deck": white_deck_o, "play_area": v.white_area, "colour": "white"}
+        data['white_o'] = white_o
+        yellow_o = {"deck": yellow_deck_o, "play_area": v.yellow_area, "colour": "yellow"}
+        data['yellow_o'] = yellow_o
+        red_o = {"deck": red_deck_o,"play_area": v.red_area, "colour": "red"}
+        data['red_o'] = red_o
+        black_o = {"deck": black_deck_o,"play_area": v.black_area, "colour": "black"}
+        data['black_o'] = black_o
+
+    else:
+        white_e = {"deck": white_deck_e, "play_area": v.white_area, "colour": "white"}
+        data['white_e'] = white_e
+        yellow_e = {"deck": yellow_deck_e, "play_area": v.yellow_area, "colour": "yellow"}
+        data['yellow_e'] = yellow_e
+        red_e = {"deck": red_deck_e,"play_area": v.red_area, "colour": "red"}
+        data['red_e'] = red_e
+        black_e = {"deck": black_deck_e,"play_area": v.black_area, "colour": "black"}
+        data['black_e'] = black_e
+
+    for item in data:
+        v.update_deck_status(data[item]['play_area'], data[item]['deck'].remaining_cards())
+        action_with_arg = partial(shuffle, data[item])
+        data[item]['play_area'].btn_shuffle.configure(command=action_with_arg)
+        v.update_deck_status(data[item]["play_area"], data[item]["deck"].remaining_cards())
+        data[item]["play_area"].update_styles()
+    end_draw()
+
 data = {}
-white_e = {"deck": white_deck_e, "play_area": v.white_area, "colour": "white"}
-data['white_e'] = white_e
-yellow_e = {"deck": yellow_deck_e, "play_area": v.yellow_area, "colour": "yellow"}
-data['yellow_e'] = yellow_e
-red_e = {"deck": red_deck_e,"play_area": v.red_area, "colour": "red"}
-data['red_e'] = red_e
-black_e = {"deck": black_deck_e,"play_area": v.black_area, "colour": "black"}
-data['black_e'] = black_e
-
-for item in data:
-    v.update_deck_status(data[item]['play_area'], data[item]['deck'].remaining_cards())
-    action_with_arg = partial(shuffle, data[item])
-    data[item]['play_area'].btn_shuffle.configure(command=action_with_arg)
-
 v.btn_draw_all.configure(command=draw_all)
 v.btn_end_draw.configure(command=end_draw)
+v.btn_switch.configure(command=switch_state)
+switch_state()
+switch_state()
+switch_state()
 
 reset()
 update_status(False)

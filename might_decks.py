@@ -76,7 +76,7 @@ class Deck():
          self.current_cards.remove(card)
       self.stored_discards.clear()
       random.shuffle(self.current_cards)
-      self.status_update(f"Shuffling {self.colour}...")
+      self.status_update(f"Shuffling '{self.name}'")
 
    def draw(self, count, crit=False):
       try:
@@ -102,10 +102,10 @@ class Deck():
             self.current_discards.append(random_card)
             global_num_cards_drawn += 1
             random.shuffle(self.current_cards)
-            self.status_update(f"Drew {self.colour} - {random_card[1].strip()}!")
+            self.status_update(f"Drew '{self.name}' - {random_card[1].strip()}!")
          return 0
       except IndexError:
-         self.status_update(f"{self.colour} deck is empty!")
+         self.status_update(f"'{self.name}' deck is empty!")
          return 1
 
    def cards_left(self):
@@ -140,23 +140,23 @@ class Deck():
 
 # setup decks - provide colour, type (enemy or oathsworn), 
 # and card details ("type", "friendly name", hit value, # of cards and sort order)
-# white_deck_o = Deck("white", "oathsworn", (("miss", "Miss   ", 0, 6, 0), 
-#                                            ("hit", "Hit(1) ", 1, 6, 1), 
-#                                            ("hit", "Hit(2) ", 2, 3, 2), 
-#                                            ("crit", "Crit(2)", 2, 3, 3)))
-# yellow_deck_o = Deck("yellow", "oathsworn", (("miss", "Miss   ", 0, 6, 0), 
-#                                              ("hit", "Hit(1) ", 1, 3, 1), 
-#                                              ("hit", "Hit(2) ", 2, 3, 2), 
-#                                              ("hit", "Hit(3) ", 3, 3, 3), 
-#                                              ("crit", "Crit(3)", 3, 3, 4)))
-# red_deck_o = Deck("red", "oathsworn", (("miss", "Miss   ", 0, 6, 0), 
-#                                        ("hit", "Hit(2) ", 2, 3, 1), 
-#                                        ("hit", "Hit(3) ", 3, 6, 2), 
-#                                        ("crit", "Crit(4)", 4, 3, 3)))
-# black_deck_o = Deck("black", "oathsworn", (("miss", "Miss   ", 0, 6, 0), 
-#                                        ("hit", "Hit(3) ", 3, 6, 1), 
-#                                        ("hit", "Hit(4) ", 4, 3, 2), 
-#                                        ("crit", "Crit(5)", 5, 3, 3)))
+white_deck_o = Deck("white", "oathsworn", (("miss", "Miss   ", 0, 6, 0, "0"), 
+                                           ("hit", "Hit(1) ", 1, 6, 1, "1"), 
+                                           ("hit", "Hit(2) ", 2, 3, 2, "2"), 
+                                           ("crit", "Crit(2)", 2, 3, 3, "{ 2 }")))
+yellow_deck_o = Deck("yellow", "oathsworn", (("miss", "Miss   ", 0, 6, 0, "0"), 
+                                             ("hit", "Hit(1) ", 1, 3, 1, "1"), 
+                                             ("hit", "Hit(2) ", 2, 3, 2, "2"), 
+                                             ("hit", "Hit(3) ", 3, 3, 3, "3"), 
+                                             ("crit", "Crit(3)", 3, 3, 4, "{ 3 }")))
+red_deck_o = Deck("red", "oathsworn", (("miss", "Miss   ", 0, 6, 0, "0"), 
+                                       ("hit", "Hit(2) ", 2, 3, 1, "2"), 
+                                       ("hit", "Hit(3) ", 3, 6, 2, "3"), 
+                                       ("crit", "Crit(4)", 4, 3, 3, "{ 4 }")))
+black_deck_o = Deck("black", "oathsworn", (("miss", "Miss   ", 0, 6, 0, "0"), 
+                                       ("hit", "Hit(3) ", 3, 6, 1, "3"), 
+                                       ("hit", "Hit(4) ", 4, 3, 2, "4"), 
+                                       ("crit", "Crit(5)", 5, 3, 3, "{ 5 }")))
 white_deck_e = Deck("white", "enemy", (("miss", "Miss   ", 0, 6, 0, "0"), 
                                            ("hit", "Hit(1) ", 1, 6, 1, "1"), 
                                            ("hit", "Hit(2) ", 2, 3, 2, "2"), 
