@@ -3,6 +3,8 @@ from tkinter import ttk
 from tkinter import *
 from tkinter.ttk import *
 import os
+import sys
+import tkinter.font
 
 class PlayArea():
     def __init__(self, parent, row, column, colour, bgcolour):
@@ -40,7 +42,15 @@ class DrawCard():
         style.configure(f'FrameCard{self.colour}.TFrame', bordercolor=self.colour)
         self.card.configure(style=f'FrameCard{self.colour}.TFrame')
         self.info = create_label(self.card, text, 0, 0, 5, 5, font=("Consolas", 14))
-      
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 # Function to create frames use ttk
 def create_frame(parent, width, height, row, column, padx=0, pady=0, relief='', borderwidth=0, sticky='', rowconfig=0, columnconfig=0):
     frame = ttk.Frame(parent, width=width, height=height, relief=relief, borderwidth=borderwidth)
@@ -91,6 +101,7 @@ yellow_colour = "yellow"
 red_colour = "red"
 black_colour = "black"
 main_frame = create_frame(root, window_width, 700, 0, 0)
+font_load = resource_path("fonts\consola.ttf")
 
 # Generate the status frame on the right side of the screen and prevent accidental typing into it.
 status_frame = create_frame(root, 200, 700, 0, 1, 0, 0, 'groove', 1)
