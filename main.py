@@ -61,8 +61,10 @@ def success_chance():
                         deck_draw = int(data[item]['play_area'].spin.get())
                         draw_details.append([deck_total_cards, deck_misses_left, deck_hits_left, deck_draw, "under spinner"])
     # print(draw_details)
-    probability = c.calculate_probability(draw_details)
-    v.result_text.configure(text=f"Success Chance:\n     {probability}")
+    probability = f"     {c.calculate_probability(draw_details)}"
+    if v.get_game_state() == 'enemy':
+        probability = "  Always 100%!"
+    v.result_text.configure(text=f"Success Chance:\n{probability}")
 
 def draw(deck_dict, count=1, crit=False):  
     if deck_dict["deck"].draw(count, crit) == 0:
