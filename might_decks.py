@@ -107,9 +107,28 @@ class Deck():
       except IndexError:
          self.status_update(f"'{self.name}' deck is empty!")
          return 1
-
+      
    def cards_left(self):
       return(len(self.current_cards))
+
+   def cards_left_stored(self):
+      return(len(self.stored_discards))
+   
+   def misses_left(self):
+      misses = 0
+      for card in self.current_cards:
+         if card[0] == 'miss':
+            misses += 1
+
+      return(misses)
+   
+   def misses_left_stored(self):
+      misses = 0
+      for card in self.stored_discards:
+         if card[0] == 'miss':
+            misses += 1
+
+      return(misses)
    
    def reset_cards_drawn(self):
       self.cards_drew = 0
@@ -137,6 +156,10 @@ class Deck():
    
    def get_name(self):
       return self.name
+   
+   def print_misses(self):
+      print(self.current_cards)
+
 
 # setup decks - provide colour, type (enemy or oathsworn), 
 # and card details ("type", "friendly name", hit value, # of cards and sort order)
