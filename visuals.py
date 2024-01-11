@@ -15,9 +15,9 @@ class PlayArea():
         self.bordercolor = colour    
         self.header = create_frame(self.parent, column_width, action_header_height, 0, self.column, 3, 2, 'raised', 1)
         self.card_area = create_frame(self.parent, column_width, action_height, 1, self.column, 3, 2, 'ridge', 1, rowconfig=9, columnconfig=2)
-        self.info = create_label(self.header, "initialize", 0, 0, 5, 5, sticky=NW, font=("Consolas", 11))
+        self.info = create_label(self.header, "initialize", 0, 0, 5, 5, sticky=NW, font=("Courier", 11))
         self.info.grid(rowspan=3)
-        self.spin = Spinbox(self.header, from_=0, to=18, width=2, font=("Terminal", 24))
+        self.spin = Spinbox(self.header, from_=0, to=18, width=2, font=("Courier", 24))
         self.spin.grid(row=0, column=1)
         self.btn_shuffle = Button(self.header, text="Shuffle")
         self.btn_shuffle.grid(row=1, column=1, padx=5, pady=5)
@@ -44,7 +44,7 @@ class DrawCard():
         self.bgcolour = bgcolour
         self.text = text
         self.card = create_frame(self.parent, 115, 40, self.row, self.column, 2, 2, 'solid', 2, sticky='NW')
-        self.info = create_label(self.card, text, 0, 0, 5, 5, font=("Consolas", 14))
+        self.info = create_label(self.card, text, 0, 0, 5, 5, font=("Courier", 14))
         self.update_styles()
 
     def update_styles(self):
@@ -70,12 +70,12 @@ def create_frame(parent, width, height, row, column, padx=0, pady=0, relief='', 
     return frame
 
 # Function to create labels use ttk
-def create_label(parent, text, row, column, padx=0, pady=0, sticky=(), font=("Consolas", 10)):
+def create_label(parent, text, row, column, padx=0, pady=0, sticky=(), font=("Courier", 9)):
     label = ttk.Label(parent, text=text, font=font)
     label.grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
     return label
 
-def create_label_place(parent, text, font=("Consolas", 25)):
+def create_label_place(parent, text, font=("Courier", 25)):
     label = ttk.Label(parent, text=text, font=font)
     label.place(anchor=CENTER, relx = .5, rely = .5)
     return label
@@ -140,7 +140,7 @@ font_load = resource_path("fonts\consola.ttf")
 
 # Generate the status frame on the right side of the screen and prevent accidental typing into it.
 status_frame = create_frame(root, window_width - main_window_width, window_height, 0, 1, 0, 0, 'groove', 1)
-status_text = tkscrolled.ScrolledText(status_frame, font=("Consolas", 10))
+status_text = tkscrolled.ScrolledText(status_frame, font=("Courier", 9))
 status_text.bind("<Key>", lambda e: "break")
 status_text.grid(row=0, column=0, sticky=NSEW)
 
@@ -162,7 +162,7 @@ info_frame_buttons = create_frame(info_frame, 150, info_height, 0, 2)
 info_label = create_label(info_frame_ins, instructions, 0, 0, 5, 5, sticky=NW)
 
 # Generate the result area and the buttons for drawing and ending a draw
-result_text = create_label(info_frame_result, "", 0, 0, 5, 5, font=("Consolas", 12))
+result_text = create_label(info_frame_result, "", 0, 0, 5, 5, font=("Courier", 11))
 btn_draw_all = Button(info_frame_buttons, text="Draw All")
 btn_draw_all.grid(row=0, column=0,sticky=E, padx=2)
 btn_end_draw = Button(info_frame_buttons, text="End Draw")
