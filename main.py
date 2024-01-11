@@ -2,6 +2,7 @@ from might_decks import Deck
 from might_decks import *
 import visuals as v
 from visuals import DrawCard
+import calculations as c
 from functools import partial
 
 def update_status(draw):
@@ -33,31 +34,37 @@ def draw_all():
                     draw(data[item], int(data[item]['play_area'].spin.get()))
         data[item]['play_area'].spin.set(0)
 
-# def success_chance():
-#     for item in data:            
-#         if data[item]['play_area'].spin.get() != "":
-#                 if int(data[item]['play_area'].spin.get()) > 0:
-#                     if int(data[item]['play_area'].spin.get()) > data[item]['deck'].cards_left():
-#                         current_deck_size += data[item]['deck'].cards_left()
-#                         total_cards_discard += data[item]['deck'].cards_left_stored()
-#                         known_misses_current += data[item]['deck'].misses_left()
-#                         known_misses_discard += data[item]['deck'].misses_left_stored()
-#                         num_draws_current += data[item]['deck'].cards_left()
-#                         num_draws_discard += (int(data[item]['play_area'].spin.get()) - data[item]['deck'].cards_left())
-#                     else:
-#                         current_deck_size += data[item]['deck'].cards_left()
-#                         total_cards_discard += data[item]['deck'].cards_left_stored()
-#                         num_draws_current += data[item]['deck'].cards_left()
+def success_chance():
+    draw_details = []
+    #draw_details(total_cards, misses_remaining, hits_remaining, number_drawn)
+    # draw_details.append([10, 1, 10-1, 2])
+    probability = ""
 
-#     probability = simulate_draws(num_draws_current, known_misses_current, current_deck_size, 
-#                                  num_draws_discard, known_misses_discard, total_cards_discard, 
-#                                  num_simulations)
-#     probability = 1 - probability
-#     v.result_text.configure(text=f"Success Chance:\n     {format(probability, '.0%')}")
+    for item in data:            
+        if data[item]['play_area'].spin.get() != "":
+                if int(data[item]['play_area'].spin.get()) > 0:
+                    if int(data[item]['play_area'].spin.get()) > data[item]['deck'].cards_left():
+                        deck_total_cards = data[item]['deck'].cards_left()
+                        deck_misses_left = data[item]['deck'].misses_left()
+                        deck_hits_left = deck_total_cards - deck_misses_left
+                        deck_draw = data[item]['deck'].cards_left()
+                        draw_details.append([deck_total_cards, deck_misses_left, deck_hits_left, deck_draw, "over spinner - main"])
+                        deck_total_cards = data[item]['deck'].cards_left_stored()
+                        deck_misses_left = data[item]['deck'].misses_left_stored()
+                        deck_hits_left = deck_total_cards - deck_misses_left
+                        deck_draw = int(data[item]['play_area'].spin.get()) - data[item]['deck'].cards_left()
+                        draw_details.append([deck_total_cards, deck_misses_left, deck_hits_left, deck_draw, "over spinner - discard"])
+                    else:
+                        deck_total_cards = data[item]['deck'].cards_left()
+                        deck_misses_left = data[item]['deck'].misses_left()
+                        deck_hits_left = deck_total_cards - deck_misses_left
+                        deck_draw = int(data[item]['play_area'].spin.get())
+                        draw_details.append([deck_total_cards, deck_misses_left, deck_hits_left, deck_draw, "under spinner"])
+    # print(draw_details)
+    probability = c.calculate_probability(draw_details)
+    v.result_text.configure(text=f"Success Chance:\n     {probability}")
 
-def draw(deck_dict, count=1, crit=False):
-
-    
+def draw(deck_dict, count=1, crit=False):  
     if deck_dict["deck"].draw(count, crit) == 0:
         v.update_deck_status(deck_dict["play_area"], deck_dict["deck"].remaining_cards())
         update_status(True)
@@ -137,7 +144,7 @@ data = {}
 v.btn_draw_all.configure(command=draw_all)
 v.btn_end_draw.configure(command=end_draw)
 v.btn_switch.configure(command=switch_state)
-# v.btn_chance.configure(command=success_chance)
+v.btn_chance.configure(command=success_chance)
 switch_state()
 switch_state()
 switch_state()
