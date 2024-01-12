@@ -152,14 +152,15 @@ header_label = create_label_place(header_frame, "Welcome to the Oathsworn Digita
 instructions = """INSTRUCTIONS:
     - Select how many to draw from each deck. Click Draw All.
     - Click on End Draw to clear the drawn cards
-    - Click on shuffle to manually shuffle a deck 
+    - Click on shuffle to manually shuffle a deck  
     - CRIT: if a crit is drawn, be sure to draw additional cards - misses will not count
-    - Switch between Oathsworn and Enemy using the Switch button"""
+    - Chances: select your cards and calculate odds of success before drawing (BETA)
+    - Switch between Oathsworn and Enemy using the Switch button (note: will end the current draw)"""
 info_frame = create_frame(main_frame, main_window_width, info_height, 1, 0, padx=2, pady=2)
 info_frame_ins = create_frame(info_frame, window_height, info_height, 0, 0)
 info_frame_result = create_frame(info_frame, 150, info_height, 0, 1)
 info_frame_buttons = create_frame(info_frame, 150, info_height, 0, 2)
-info_label = create_label(info_frame_ins, instructions, 0, 0, 5, 5, sticky=NW)
+info_label = create_label(info_frame_ins, instructions, 0, 0, 5, 5, sticky=NW, font=("Courier", 8))
 
 # Generate the result area and the buttons for drawing and ending a draw
 result_text = create_label(info_frame_result, "", 0, 0, 5, 5, font=("Courier", 11))
